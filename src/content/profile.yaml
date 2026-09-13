@@ -1,0 +1,45 @@
+# Everything personal on the site comes from this file and its siblings.
+name: Masaharu Temma
+shortName: Masa
+jobTitle: Data Engineer
+location:
+  city: Melbourne
+  country: Australia
+  countryCode: AU
+
+# Home page, OG image and meta description.
+tagline: Data Engineer in Melbourne, moving toward AI platform engineering.
+summary: >-
+  I build data platforms on Azure and Databricks with PySpark, Delta Lake,
+  Unity Catalog and Terraform. I like early-stage product work, small teams,
+  and owning a system end to end.
+
+# About page, one string per paragraph.
+about:
+  - >-
+    Data engineer moving toward AI platform engineering. I like early-stage
+    product work, small teams, and owning a system end to end.
+
+now: >-
+  Working toward the Databricks Certified Data Engineer Professional, and
+  learning AI engineering on the side.
+lookingFor: >-
+  Actively looking for full-time data engineering or AI platform engineering
+  roles. Melbourne or remote, and open to relocating.
+
+email: temma.masa@gmail.com
+links:
+  linkedin: https://www.linkedin.com/in/masaharu-temma/
+  github: https://github.com/masatemma
+
+# Drop the file at public/resume.pdf.
+resume: resume.pdf
+
+stack:
+  primary: [Azure, Databricks, PySpark, Delta Lake, Unity Catalog, Terraform, SQL, Python]
+  secondary: [AWS]
+
+languages:
+  - { name: English, code: en, level: Professional }
+  - { name: Japanese, code: ja, level: Native }
+  - { name: Mandarin Chinese, code: zh, level: Native }

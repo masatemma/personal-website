@@ -1,0 +1,12 @@
+# Most recent first.
+- id: monash-mds
+  degree: Master of Data Science
+  institution: Monash University
+  start: 2024
+  end: 2026
+
+- id: unimelb-bsc
+  degree: Bachelor of Science (Computing and Software Systems)
+  institution: University of Melbourne
+  start: 2020
+  end: 2023
