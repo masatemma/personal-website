@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import { formatDate, getPosts, href } from '../../lib/site';
+
+const posts = await getPosts();
+---
+<Base title="Writing" description="Notes on data engineering and AI platforms.">
+  <h1>Writing</h1>
+
+  {posts.length === 0 ? (
+    <p class="lede">No posts yet. Follow the <a href={href('/rss.xml')}>RSS feed</a> to hear about the first one.</p>
+  ) : (
+    <>
+      <p class="meta"><a href={href('/rss.xml')}>RSS feed</a></p>
+      <ol class="entries">
+        {posts.map(({ id, data }) => (
+          <li>
+            <a href={href(`/writing/${id}/`)}>{data.title}</a>
+            <span class="meta"><time datetime={data.date.toISOString().slice(0, 10)}>{formatDate(data.date)}</time>{data.draft && ' · draft'}</span>
+            <span>{data.description}</span>
+          </li>
+        ))}
+      </ol>
+    </>
+  )}
+</Base>

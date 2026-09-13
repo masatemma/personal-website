@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import { getProfile, href, obfuscate } from '../lib/site';
+
+const profile = await getProfile();
+const email = obfuscate(profile.email);
+const mailto = obfuscate(`mailto:${profile.email}`);
+---
+<Base title="Contact" description={`How to reach ${profile.name}: email, LinkedIn or GitHub.`}>
+  <h1>Contact</h1>
+  <p class="lede">Email is the fastest way to reach me.</p>
+
+  <dl class="facts">
+    <dt>Email</dt>
+    <dd set:html={`<a href="${mailto}">${email}</a>`} />
+    <dt>LinkedIn</dt>
+    <dd><a href={profile.links.linkedin}>{profile.links.linkedin.replace(/^https:\/\/(www\.)?/, '').replace(/\/$/, '')}</a></dd>
+    <dt>GitHub</dt>
+    <dd><a href={profile.links.github}>{profile.links.github.replace(/^https:\/\//, '')}</a></dd>
+    <dt>Résumé</dt>
+    <dd><a href={href(`/${profile.resume}`)} type="application/pdf">PDF</a></dd>
+  </dl>
+</Base>

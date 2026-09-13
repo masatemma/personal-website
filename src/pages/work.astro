@@ -1,0 +1,49 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { getProjects } from '../lib/site';
+
+const projects = await Promise.all(
+  (await getProjects()).map(async (project) => ({ project, ...(await render(project)) })),
+);
+---
+<Base title="Work" description="Data platforms and pipelines I've built: the problem, what I built, the stack and the outcome.">
+  <h1>Work</h1>
+  <p class="lede">Most substantial first.</p>
+
+  {projects.map(({ project: { id, data }, Content }) => (
+    <article class="project" aria-labelledby={id}>
+      <header>
+        <h2 id={id}>{data.title}</h2>
+        <p class="meta">{data.orgUrl ? <a href={data.orgUrl}>{data.org}</a> : data.org}{[data.period, data.team].filter(Boolean).map((part) => ` · ${part}`)}</p>
+      </header>
+
+      <h3>Problem</h3>
+      <p>{data.problem}</p>
+
+      <h3>What I built</h3>
+      <div class="prose">
+        <Content />
+      </div>
+
+      <h3>Stack</h3>
+      <ul class="tags">
+        {data.stack.map((item) => <li>{item}</li>)}
+      </ul>
+
+      {data.outcomes.length > 0 && (
+        <>
+          <h3>Outcome</h3>
+          <dl class="outcomes">
+            {data.outcomes.map(({ value, label }) => (
+              <div>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </>
+      )}
+    </article>
+  ))}
+</Base>

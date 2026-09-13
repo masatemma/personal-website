@@ -1,3 +1,24 @@
 ---
+import Base from '../layouts/Base.astro';
+import { getProfile, href } from '../lib/site';
+
+const profile = await getProfile();
 ---
-<p>scaffold</p>
+<Base description={`${profile.tagline} ${profile.summary}`} type="profile">
+  <h1>{profile.name}</h1>
+  <p class="lede">{profile.tagline}</p>
+  <p>{profile.summary}</p>
+
+  <dl class="facts">
+    <dt>Now</dt>
+    <dd>{profile.now}</dd>
+    <dt>Looking for</dt>
+    <dd>{profile.lookingFor}</dd>
+  </dl>
+
+  <ul class="actions">
+    <li><a href={href('/work/')}>Work</a></li>
+    <li><a href={href(`/${profile.resume}`)} type="application/pdf">Résumé (PDF)</a></li>
+    <li><a href={href('/contact/')}>Contact</a></li>
+  </ul>
+</Base>

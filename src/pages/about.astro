@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { formatMonth, getProfile, href } from '../lib/site';
+
+const profile = await getProfile();
+const experience = await getCollection('experience');
+const education = await getCollection('education');
+---
+<Base title="About" description={`Career, education and languages. ${profile.lookingFor}`}>
+  <h1>About</h1>
+  {profile.about.map((paragraph, i) => <p class={i === 0 ? 'lede' : undefined}>{paragraph}</p>)}
+
+  <section aria-labelledby="looking">
+    <h2 id="looking">What I'm looking for</h2>
+    <p>{profile.lookingFor}</p>
+    <p><a href={href('/contact/')}>Get in touch</a> or read my <a href={href(`/${profile.resume}`)} type="application/pdf">résumé (PDF)</a>.</p>
+  </section>
+
+  <section aria-labelledby="experience">
+    <h2 id="experience">Experience</h2>
+    <ol class="entries">
+      {experience.map(({ data }) => (
+        <li>
+          <strong>{data.title}</strong>, {data.url ? <a href={data.url}>{data.org}</a> : data.org}
+          <span class="meta">
+            <time datetime={data.start}>{formatMonth(data.start)}</time> –
+            {data.end ? <time datetime={data.end}>{formatMonth(data.end)}</time> : 'present'}
+          </span>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section aria-labelledby="education">
+    <h2 id="education">Education</h2>
+    <ol class="entries">
+      {education.map(({ data }) => (
+        <li>
+          <strong>{data.degree}</strong>, {data.url ? <a href={data.url}>{data.institution}</a> : data.institution}
+          <span class="meta"><time>{data.start}</time> – <time>{data.end}</time></span>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section aria-labelledby="stack">
+    <h2 id="stack">Stack</h2>
+    <ul class="tags">
+      {profile.stack.primary.map((item) => <li>{item}</li>)}
+    </ul>
+    {profile.stack.secondary.length > 0 && <p class="meta">Also: {profile.stack.secondary.join(', ')}</p>}
+  </section>
+
+  <section aria-labelledby="languages">
+    <h2 id="languages">Languages</h2>
+    <ul class="entries">
+      {profile.languages.map(({ name, level }) => (
+        <li><strong>{name}</strong> <span class="meta">{level}</span></li>
+      ))}
+    </ul>
+  </section>
+</Base>

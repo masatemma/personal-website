@@ -1,0 +1,85 @@
+---
+import '../styles/site.css';
+import { absolute, getPosts, getProfile, href } from '../lib/site';
+
+interface Props {
+  /** Page title. Omit on the home page to use the name alone. */
+  title?: string;
+  description: string;
+  type?: 'website' | 'article' | 'profile';
+  /** Structured data, rendered as JSON-LD. */
+  jsonLd?: Record<string, unknown>;
+}
+
+const { title, description, type = 'website', jsonLd } = Astro.props;
+const profile = await getProfile();
+const hasPosts = (await getPosts()).length > 0;
+
+const fullTitle = title ? `${title} · ${profile.name}` : `${profile.name} · ${profile.jobTitle}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImage = absolute('/og.png', Astro.site);
+const ogAlt = `${profile.name}: ${profile.tagline}`;
+
+const nav = [
+  { path: '/work/', label: 'Work' },
+  { path: '/about/', label: 'About' },
+  ...(hasPosts ? [{ path: '/writing/', label: 'Writing' }] : []),
+  { path: '/contact/', label: 'Contact' },
+];
+const current = Astro.url.pathname;
+---
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{fullTitle}</title>
+    <meta name="description" content={description}>
+    <meta name="author" content={profile.name}>
+    <link rel="canonical" href={canonical}>
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#fcfcfb" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href={href('/favicon.svg')} type="image/svg+xml">
+    <link rel="alternate" type="application/rss+xml" title={`${profile.name}: Writing`} href={href('/rss.xml')}>
+
+    <meta property="og:type" content={type}>
+    <meta property="og:site_name" content={profile.name}>
+    <meta property="og:locale" content="en_AU">
+    <meta property="og:title" content={fullTitle}>
+    <meta property="og:description" content={description}>
+    <meta property="og:url" content={canonical}>
+    <meta property="og:image" content={ogImage}>
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content={ogAlt}>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content={fullTitle}>
+    <meta name="twitter:description" content={description}>
+    <meta name="twitter:image" content={ogImage}>
+    <meta name="twitter:image:alt" content={ogAlt}>
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="wrap">
+      <header class="site-header">
+        <a class="site-name" href={href('/')} aria-current={current === href('/') ? 'page' : undefined}>{profile.name}</a>
+        <nav class="site-nav" aria-label="Main">
+          <ul>
+            {nav.map(({ path, label }) => (
+              <li><a href={href(path)} aria-current={current.startsWith(href(path)) ? 'page' : undefined}>{label}</a></li>
+            ))}
+          </ul>
+        </nav>
+      </header>
+      <main id="main">
+        <slot />
+      </main>
+      <footer class="site-footer">
+        <p>© {new Date().getFullYear()} {profile.name}. No JavaScript, no cookies, no tracking.</p>
+      </footer>
+    </div>
+  </body>
+</html>
