@@ -9,9 +9,11 @@ interface Props {
   type?: 'website' | 'article' | 'profile';
   /** Structured data, rendered as JSON-LD. */
   jsonLd?: Record<string, unknown>;
+  /** Keep thin pages, like an empty index, out of search results. */
+  noindex?: boolean;
 }
 
-const { title, description, type = 'website', jsonLd } = Astro.props;
+const { title, description, type = 'website', jsonLd, noindex = false } = Astro.props;
 const profile = await getProfile();
 const hasPosts = (await getPosts()).length > 0;
 
@@ -37,6 +39,7 @@ const current = Astro.url.pathname;
     <meta name="description" content={description}>
     <meta name="author" content={profile.name}>
     <link rel="canonical" href={canonical}>
+    {noindex && <meta name="robots" content="noindex">}
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="#fcfcfb" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)">
@@ -59,7 +62,7 @@ const current = Astro.url.pathname;
     <meta name="twitter:description" content={description}>
     <meta name="twitter:image" content={ogImage}>
     <meta name="twitter:image:alt" content={ogAlt}>
-    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd, null, 2).replace(/</g, '\\u003c')} />}
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
