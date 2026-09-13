@@ -9,11 +9,9 @@ interface Props {
   type?: 'website' | 'article' | 'profile';
   /** Structured data, rendered as JSON-LD. */
   jsonLd?: Record<string, unknown>;
-  /** Keep thin pages, like an empty index, out of search results. */
-  noindex?: boolean;
 }
 
-const { title, description, type = 'website', jsonLd, noindex = false } = Astro.props;
+const { title, description, type = 'website', jsonLd } = Astro.props;
 const profile = await getProfile();
 const hasPosts = (await getPosts()).length > 0;
 
@@ -39,7 +37,6 @@ const current = Astro.url.pathname;
     <meta name="description" content={description}>
     <meta name="author" content={profile.name}>
     <link rel="canonical" href={canonical}>
-    {noindex && <meta name="robots" content="noindex">}
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="#fcfcfb" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)">

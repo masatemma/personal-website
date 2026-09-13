@@ -4,7 +4,7 @@ import { formatDate, getPosts, href } from '../../lib/site';
 
 const posts = await getPosts();
 ---
-<Base title="Writing" description="Notes on data engineering and AI platforms." noindex={posts.length === 0}>
+<Base title="Writing" description="Notes on data engineering and AI platforms.">
   <h1>Writing</h1>
 
   {posts.length === 0 ? (

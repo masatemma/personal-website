@@ -10,8 +10,7 @@ export const GET: APIRoute = async ({ site }) => {
     { loc: absolute('/work/', site) },
     { loc: absolute('/about/', site) },
     { loc: absolute('/contact/', site) },
-    // The Writing index is noindex while empty, so leave it out until there is a post.
-    ...(posts.length > 0 ? [{ loc: absolute('/writing/', site), lastmod: iso(posts[0].data.date) }] : []),
+    { loc: absolute('/writing/', site), lastmod: posts[0] && iso(posts[0].data.date) },
     ...posts.map(({ id, data }) => ({
       loc: absolute(`/writing/${id}/`, site),
       lastmod: iso(data.updated ?? data.date),
