@@ -28,7 +28,7 @@ builds from a clean checkout, so the live site isn't affected.
 
 ```
 src/content/
-  profile.yaml         name, tagline, now, looking for, links, stack, languages
+  profile.yaml         name, tagline, now, connect, links, stack, languages
   experience.yaml      roles (title, org, dates)
   education.yaml       degrees
   projects/*.md        Work page entries
@@ -36,7 +36,6 @@ src/content/
 src/content.config.ts  schemas for all of the above
 src/pages/             routes, plus og.png, rss.xml, sitemap.xml, robots.txt, llms.txt
 src/styles/site.css    the only stylesheet
-public/resume.pdf      your résumé (not committed yet, see below)
 ```
 
 Content edits never require touching components. The schema in
@@ -95,11 +94,6 @@ The Writing link appears in the nav automatically once there is at least one
 published post. RSS and the sitemap update on the next build. Files starting with
 `_` are ignored, so you can keep templates or unfinished notes there.
 
-## Résumé
-
-Put the PDF at `public/resume.pdf`. It is linked from Home, About and Contact,
-and served at `/resume.pdf`. `npm run budget` warns while it is missing.
-
 ## Deploying (GitHub Pages)
 
 The workflow in `.github/workflows/deploy.yml` runs on every push to `main`:
@@ -146,9 +140,9 @@ needed.
 - **Colour:** one accent, teal `#0f6e6e` light and `#5ec8c8` dark, on warm
   neutrals. Every text/background pair is at least 5.5:1.
 - **Dark mode:** `prefers-color-scheme` only, no toggle, no JS.
-- **Motion:** hover transitions and a slow pulse on the status dot, only under
-  `prefers-reduced-motion: no-preference`.
-- **Status badge:** `status` in `profile.yaml`. Delete the line to hide it.
+- **Motion:** hover transitions only, under `prefers-reduced-motion: no-preference`.
+- **Badge:** the home page badge shows the location. Uncomment `status` in
+  `profile.yaml` to add a note before it.
 - **Email:** HTML-entity-encoded on the Contact page. Browsers and reader mode
   decode it; naive scrapers don't. Without JS that's as far as obfuscation goes.
   The address isn't in the JSON-LD, `llms.txt` or OG image.

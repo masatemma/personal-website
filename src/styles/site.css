@@ -211,7 +211,6 @@ main { flex: 1; padding-bottom: clamp(3rem, 8vw, 6rem); }
   height: 0.5rem;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
 .display {
@@ -257,7 +256,6 @@ main { flex: 1; padding-bottom: clamp(3rem, 8vw, 6rem); }
   .site-nav a { padding-inline: 0.45rem; font-size: 0.76rem; }
   .summary { font-size: 0.95rem; }
   .actions { display: grid; grid-template-columns: 1fr 1fr; }
-  .actions li:first-child { grid-column: 1 / -1; }
   .btn { width: 100%; justify-content: center; }
 }
 
@@ -379,7 +377,5 @@ main { flex: 1; padding-bottom: clamp(3rem, 8vw, 6rem); }
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
   a, .btn, .arrow, .site-nav a { transition: color 0.15s, background-color 0.15s, border-color 0.15s, transform 0.15s; }
-  .status::before { animation: pulse 2.4s ease-out infinite; }
-  @keyframes pulse { 70%, 100% { box-shadow: 0 0 0 0.45rem transparent; } }
 }
 .row-narrow { max-width: 44rem; }

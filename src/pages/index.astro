@@ -37,7 +37,6 @@ const person = {
 
     <ul class="actions">
       <li><a class="btn btn-primary" href={href('/work/')}>View work <span aria-hidden="true">→</span></a></li>
-      <li><a class="btn" href={href(`/${profile.resume}`)} type="application/pdf">Résumé (PDF)</a></li>
       <li><a class="btn" href={href('/contact/')}>Contact</a></li>
     </ul>
   </section>
@@ -48,8 +47,8 @@ const person = {
       <dd>{profile.now}</dd>
     </div>
     <div>
-      <dt class="label">Looking for</dt>
-      <dd>{profile.lookingFor}</dd>
+      <dt class="label">Connect</dt>
+      <dd>{profile.connect}</dd>
     </div>
   </dl>
 </Base>

@@ -4,12 +4,12 @@ import { formatDate, getPosts, href } from '../../lib/site';
 
 const posts = await getPosts();
 ---
-<Base title="Writing" description="Notes on data engineering and AI platforms.">
+<Base title="Writing" description="Notes on data engineering.">
   <header class="page-head">
     <h1>Writing</h1>
     {posts.length === 0
       ? <p class="lede">No posts yet. Follow the <a href={href('/rss.xml')}>RSS feed</a> to hear about the first one.</p>
-      : <p class="lede">Notes on data engineering and AI platforms. <a href={href('/rss.xml')}>RSS</a></p>}
+      : <p class="lede">Notes on data engineering. <a href={href('/rss.xml')}>RSS</a></p>}
   </header>
 
   {posts.length > 0 && (

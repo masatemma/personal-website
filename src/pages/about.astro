@@ -7,17 +7,17 @@ const profile = await getProfile();
 const experience = await getCollection('experience');
 const education = await getCollection('education');
 ---
-<Base title="About" description={`Career, education and languages. ${profile.lookingFor}`}>
+<Base title="About" description={`Career, education, stack and languages of ${profile.name}, ${profile.jobTitle.toLowerCase()} in ${profile.location.city}.`}>
   <header class="page-head">
     <h1>About</h1>
     {profile.about.map((paragraph) => <p class="lede">{paragraph}</p>)}
   </header>
 
-  <section class="row" aria-labelledby="looking">
-    <h2 id="looking" class="label">Looking for</h2>
+  <section class="row" aria-labelledby="connect">
+    <h2 id="connect" class="label">Connect</h2>
     <div>
-      <p>{profile.lookingFor}</p>
-      <p><a href={href('/contact/')}>Get in touch</a> or read my <a href={href(`/${profile.resume}`)} type="application/pdf">résumé (PDF)</a>.</p>
+      <p>{profile.connect}</p>
+      <p><a href={href('/contact/')}>Get in touch</a></p>
     </div>
   </section>
 

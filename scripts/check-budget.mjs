@@ -89,10 +89,6 @@ for (const css of walk(DIST).filter((path) => path.endsWith('.css'))) {
   if (size > CSS_RAW_BYTES) failures.push(`${relative(DIST, css)} is ${kb(size)} raw, budget ${kb(CSS_RAW_BYTES)}`);
 }
 
-if (!existsSync(join(DIST, 'resume.pdf'))) {
-  console.warn('\nWarning: public/resume.pdf is missing, so résumé links will 404.');
-}
-
 if (failures.length > 0) {
   console.error(`\nBudget check failed:\n${failures.map((f) => `  - ${f}`).join('\n')}`);
   process.exit(1);

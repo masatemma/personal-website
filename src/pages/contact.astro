@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getProfile, href, obfuscate } from '../lib/site';
+import { getProfile, obfuscate } from '../lib/site';
 
 const profile = await getProfile();
 const email = obfuscate(profile.email);
@@ -10,13 +10,12 @@ const display = (url: string) => url.replace(/^https:\/\/(www\.)?/, '').replace(
 <Base title="Contact" description={`How to reach ${profile.name}: email, LinkedIn or GitHub.`}>
   <header class="page-head">
     <h1>Contact</h1>
-    <p class="lede">Email is the fastest way to reach me.</p>
+    <p class="lede">{profile.connect}</p>
   </header>
 
   <ul class="link-list">
     <li set:html={`<a class="link-row" href="${mailto}"><span class="label">Email</span><span class="value">${email}</span><span class="arrow" aria-hidden="true">→</span></a>`} />
     <li><a class="link-row" href={profile.links.linkedin}><span class="label">LinkedIn</span><span class="value">{display(profile.links.linkedin)}</span><span class="arrow" aria-hidden="true">↗</span></a></li>
     <li><a class="link-row" href={profile.links.github}><span class="label">GitHub</span><span class="value">{display(profile.links.github)}</span><span class="arrow" aria-hidden="true">↗</span></a></li>
-    <li><a class="link-row" href={href(`/${profile.resume}`)} type="application/pdf"><span class="label">Résumé</span><span class="value">PDF</span><span class="arrow" aria-hidden="true">↓</span></a></li>
   </ul>
 </Base>
