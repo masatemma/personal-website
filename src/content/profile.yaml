@@ -8,6 +8,7 @@ location:
   countryCode: AU
 
 # Home page, OG image and meta description.
+status: Open to work   # optional badge on the home page; remove to hide
 tagline: Data Engineer in Melbourne, moving toward AI platform engineering.
 summary: >-
   I build data platforms on Azure and Databricks with PySpark, Delta Lake,

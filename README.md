@@ -3,7 +3,7 @@
 Personal site for Masaharu Temma. Static, built with [Astro](https://astro.build),
 ships zero JavaScript, and deploys to GitHub Pages.
 
-The landing page is about **4 KB transferred** (HTML, CSS and favicon, gzipped),
+The landing page is about **16 KB transferred** (HTML, CSS, one web font and favicon),
 against a hard budget of 50 KB that CI enforces.
 
 ## Local development
@@ -134,17 +134,26 @@ needed.
 
 ## Design notes
 
-- **Type:** system font stack, 17px base, 1.25 (major third) scale, 66ch measure.
-  Zero bytes of font, native rendering on every OS, and enough contrast between
-  levels without display sizes.
-- **Space:** multiples of a 1.5rem rhythm unit (0.75 / 1.5 / 3 / 4.5rem).
-- **Colour:** one accent, teal `#0f6e6e` light and `#5ec8c8` dark. Every text
-  colour is at least 5.8:1 against its background.
+- **Type:** Martian Mono 500 for display type, labels and metadata. It's one
+  self-hosted Latin subset (`src/assets/fonts`, 10 KB, preloaded, SIL OFL) with a
+  size-adjusted fallback, so it causes no layout shift. Body text uses the system
+  sans stack. All sizes are fluid with `clamp()`.
+- **Layout:** a 72rem frame. Inner pages put section labels in an 11rem gutter
+  that stays in place while you scroll (on screens 52rem and wider) and stacks
+  above the content on narrow screens. Project cards use container queries, so
+  they adapt to their own width rather than the viewport. The base size steps up
+  on very large displays.
+- **Colour:** one accent, teal `#0f6e6e` light and `#5ec8c8` dark, on warm
+  neutrals. Every text/background pair is at least 5.5:1.
 - **Dark mode:** `prefers-color-scheme` only, no toggle, no JS.
+- **Motion:** hover transitions and a slow pulse on the status dot, only under
+  `prefers-reduced-motion: no-preference`.
+- **Status badge:** `status` in `profile.yaml`. Delete the line to hide it.
 - **Email:** HTML-entity-encoded on the Contact page. Browsers and reader mode
   decode it; naive scrapers don't. Without JS that's as far as obfuscation goes.
   The address isn't in the JSON-LD, `llms.txt` or OG image.
-- **OG image:** an SVG template rasterised by resvg at build time using Inter
-  (`assets/fonts`, SIL OFL). The font is never shipped to browsers.
+- **OG image:** an SVG template rasterised by resvg at build time, using the
+  Martian Mono and Inter TTFs in `assets/fonts`. Those TTFs are never shipped to
+  browsers.
 - **Readable source:** `compressHTML` is off and there are no scoped styles, so
   view-source shows plain, indented HTML.

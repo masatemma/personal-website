@@ -8,55 +8,60 @@ const experience = await getCollection('experience');
 const education = await getCollection('education');
 ---
 <Base title="About" description={`Career, education and languages. ${profile.lookingFor}`}>
-  <h1>About</h1>
-  {profile.about.map((paragraph, i) => <p class={i === 0 ? 'lede' : undefined}>{paragraph}</p>)}
+  <header class="page-head">
+    <h1>About</h1>
+    {profile.about.map((paragraph) => <p class="lede">{paragraph}</p>)}
+  </header>
 
-  <section aria-labelledby="looking">
-    <h2 id="looking">What I'm looking for</h2>
-    <p>{profile.lookingFor}</p>
-    <p><a href={href('/contact/')}>Get in touch</a> or read my <a href={href(`/${profile.resume}`)} type="application/pdf">résumé (PDF)</a>.</p>
+  <section class="row" aria-labelledby="looking">
+    <h2 id="looking" class="label">Looking for</h2>
+    <div>
+      <p>{profile.lookingFor}</p>
+      <p><a href={href('/contact/')}>Get in touch</a> or read my <a href={href(`/${profile.resume}`)} type="application/pdf">résumé (PDF)</a>.</p>
+    </div>
   </section>
 
-  <section aria-labelledby="experience">
-    <h2 id="experience">Experience</h2>
+  <section class="row" aria-labelledby="experience">
+    <h2 id="experience" class="label">Experience</h2>
     <ol class="entries">
       {experience.map(({ data }) => (
         <li>
-          <strong>{data.title}</strong>, {data.url ? <a href={data.url}>{data.org}</a> : data.org}
           <span class="meta">
-            <time datetime={data.start}>{formatMonth(data.start)}</time> –
-            {data.end ? <time datetime={data.end}>{formatMonth(data.end)}</time> : 'present'}
+            <time datetime={data.start}>{formatMonth(data.start)}</time> – {data.end ? <time datetime={data.end}>{formatMonth(data.end)}</time> : 'present'}
           </span>
+          <span><strong>{data.title}</strong>, {data.url ? <a href={data.url}>{data.org}</a> : data.org}</span>
         </li>
       ))}
     </ol>
   </section>
 
-  <section aria-labelledby="education">
-    <h2 id="education">Education</h2>
+  <section class="row" aria-labelledby="education">
+    <h2 id="education" class="label">Education</h2>
     <ol class="entries">
       {education.map(({ data }) => (
         <li>
-          <strong>{data.degree}</strong>, {data.url ? <a href={data.url}>{data.institution}</a> : data.institution}
           <span class="meta"><time>{data.start}</time> – <time>{data.end}</time></span>
+          <span><strong>{data.degree}</strong>, {data.url ? <a href={data.url}>{data.institution}</a> : data.institution}</span>
         </li>
       ))}
     </ol>
   </section>
 
-  <section aria-labelledby="stack">
-    <h2 id="stack">Stack</h2>
-    <ul class="tags">
-      {profile.stack.primary.map((item) => <li>{item}</li>)}
-    </ul>
-    {profile.stack.secondary.length > 0 && <p class="meta">Also: {profile.stack.secondary.join(', ')}</p>}
+  <section class="row" aria-labelledby="stack">
+    <h2 id="stack" class="label">Stack</h2>
+    <div>
+      <ul class="tags">
+        {profile.stack.primary.map((item) => <li>{item}</li>)}
+      </ul>
+      {profile.stack.secondary.length > 0 && <p class="meta">Also: {profile.stack.secondary.join(', ')}</p>}
+    </div>
   </section>
 
-  <section aria-labelledby="languages">
-    <h2 id="languages">Languages</h2>
+  <section class="row" aria-labelledby="languages">
+    <h2 id="languages" class="label">Languages</h2>
     <ul class="entries">
       {profile.languages.map(({ name, level }) => (
-        <li><strong>{name}</strong> <span class="meta">{level}</span></li>
+        <li><span class="meta">{level}</span><strong>{name}</strong></li>
       ))}
     </ul>
   </section>

@@ -12,6 +12,7 @@ const profile = defineCollection({
     shortName: z.string(),
     jobTitle: z.string(),
     location: z.object({ city: z.string(), country: z.string(), countryCode: z.string().length(2) }),
+    status: z.string().optional(),
     tagline: z.string(),
     summary: z.string(),
     about: z.array(z.string()),

@@ -6,44 +6,53 @@ import { getProjects } from '../lib/site';
 const projects = await Promise.all(
   (await getProjects()).map(async (project) => ({ project, ...(await render(project)) })),
 );
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 <Base title="Work" description="Data platforms and pipelines I've built: the problem, what I built, the stack and the outcome.">
-  <h1>Work</h1>
-  <p class="lede">Most substantial first.</p>
+  <header class="page-head">
+    <h1>Work</h1>
+    <p class="lede">What I've built, most substantial first.</p>
+  </header>
 
-  {projects.map(({ project: { id, data }, Content }) => (
-    <article class="project" aria-labelledby={id}>
-      <header>
-        <h2 id={id}>{data.title}</h2>
-        <p class="meta">{data.orgUrl ? <a href={data.orgUrl}>{data.org}</a> : data.org}{[data.period, data.team].filter(Boolean).map((part) => ` · ${part}`)}</p>
-      </header>
+  <div class="projects">
+    {projects.map(({ project: { id, data }, Content }, i) => (
+      <article class="project" aria-labelledby={id}>
+        <header>
+          <p class="meta index">{pad(i + 1)} / {pad(projects.length)}</p>
+          <h2 id={id}>{data.title}</h2>
+          <p class="org">{data.orgUrl ? <a href={data.orgUrl}>{data.org}</a> : data.org}{[data.period, data.team].filter(Boolean).map((part) => ` · ${part}`)}</p>
+        </header>
 
-      <h3>Problem</h3>
-      <p>{data.problem}</p>
-
-      <h3>What I built</h3>
-      <div class="prose">
-        <Content />
-      </div>
-
-      <h3>Stack</h3>
-      <ul class="tags">
-        {data.stack.map((item) => <li>{item}</li>)}
-      </ul>
-
-      {data.outcomes.length > 0 && (
-        <>
-          <h3>Outcome</h3>
-          <dl class="outcomes">
-            {data.outcomes.map(({ value, label }) => (
-              <div>
-                <dt>{label}</dt>
-                <dd>{value}</dd>
-              </div>
-            ))}
-          </dl>
-        </>
-      )}
-    </article>
-  ))}
+        <div class="spec">
+          <div>
+            <h3 class="label">Problem</h3>
+            <p>{data.problem}</p>
+          </div>
+          <div>
+            <h3 class="label">What I built</h3>
+            <div class="prose"><Content /></div>
+          </div>
+          <div>
+            <h3 class="label">Stack</h3>
+            <ul class="tags">
+              {data.stack.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+          {data.outcomes.length > 0 && (
+            <div>
+              <h3 class="label">Outcome</h3>
+              <dl class="outcomes">
+                {data.outcomes.map(({ value, label }) => (
+                  <div>
+                    <dt>{label}</dt>
+                    <dd class="mono">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )}
+        </div>
+      </article>
+    ))}
+  </div>
 </Base>

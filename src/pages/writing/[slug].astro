@@ -13,14 +13,14 @@ const { Content } = await render(post);
 ---
 <Base title={post.data.title} description={post.data.description} type="article">
   <article>
-    <header>
+    <header class="page-head">
       <h1>{post.data.title}</h1>
       <p class="meta">
         <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(post.data.date)}</time>
         {post.data.updated && <> · updated <time datetime={post.data.updated.toISOString().slice(0, 10)}>{formatDate(post.data.updated)}</time></>}
       </p>
     </header>
-    <div class="prose">
+    <div class="prose row-narrow">
       <Content />
     </div>
   </article>

@@ -1,6 +1,6 @@
 ---
-import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
 import { absolute, getProfile, href } from '../lib/site';
 
 const profile = await getProfile();
@@ -29,20 +29,27 @@ const person = {
 };
 ---
 <Base description={`${profile.tagline} ${profile.summary}`} type="profile" jsonLd={person}>
-  <h1>{profile.name}</h1>
-  <p class="lede">{profile.tagline}</p>
-  <p>{profile.summary}</p>
+  <section class="hero" aria-labelledby="name">
+    <p class="status">{[profile.status, `${profile.location.city}, ${profile.location.countryCode}`].filter(Boolean).join(' · ')}</p>
+    <h1 id="name" class="display">{profile.name}</h1>
+    <p class="lede">{profile.tagline}</p>
+    <p class="summary">{profile.summary}</p>
 
-  <dl class="facts">
-    <dt>Now</dt>
-    <dd>{profile.now}</dd>
-    <dt>Looking for</dt>
-    <dd>{profile.lookingFor}</dd>
+    <ul class="actions">
+      <li><a class="btn btn-primary" href={href('/work/')}>View work <span aria-hidden="true">→</span></a></li>
+      <li><a class="btn" href={href(`/${profile.resume}`)} type="application/pdf">Résumé (PDF)</a></li>
+      <li><a class="btn" href={href('/contact/')}>Contact</a></li>
+    </ul>
+  </section>
+
+  <dl class="bento">
+    <div>
+      <dt class="label">Now</dt>
+      <dd>{profile.now}</dd>
+    </div>
+    <div>
+      <dt class="label">Looking for</dt>
+      <dd>{profile.lookingFor}</dd>
+    </div>
   </dl>
-
-  <ul class="actions">
-    <li><a href={href('/work/')}>Work</a></li>
-    <li><a href={href(`/${profile.resume}`)} type="application/pdf">Résumé (PDF)</a></li>
-    <li><a href={href('/contact/')}>Contact</a></li>
-  </ul>
 </Base>

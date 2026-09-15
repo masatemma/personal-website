@@ -1,5 +1,6 @@
 ---
 import '../styles/site.css';
+import monoFont from '../assets/fonts/martian-mono-500-latin.woff2?url';
 import { absolute, getPosts, getProfile, href } from '../lib/site';
 
 interface Props {
@@ -38,8 +39,9 @@ const current = Astro.url.pathname;
     <meta name="author" content={profile.name}>
     <link rel="canonical" href={canonical}>
     <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#fcfcfb" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0b0c0c" media="(prefers-color-scheme: dark)">
+    <link rel="preload" href={monoFont} as="font" type="font/woff2" crossorigin>
     <link rel="icon" href={href('/favicon.svg')} type="image/svg+xml">
     <link rel="alternate" type="application/rss+xml" title={`${profile.name}: Writing`} href={href('/rss.xml')}>
 
@@ -63,8 +65,8 @@ const current = Astro.url.pathname;
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
-    <div class="wrap">
-      <header class="site-header">
+    <header class="site-header">
+      <div class="frame">
         <a class="site-name" href={href('/')} aria-current={current === href('/') ? 'page' : undefined}>{profile.name}</a>
         <nav class="site-nav" aria-label="Main">
           <ul>
@@ -73,13 +75,16 @@ const current = Astro.url.pathname;
             ))}
           </ul>
         </nav>
-      </header>
-      <main id="main">
-        <slot />
-      </main>
-      <footer class="site-footer">
-        <p>© {new Date().getFullYear()} {profile.name}. No JavaScript, no cookies, no tracking.</p>
-      </footer>
-    </div>
+      </div>
+    </header>
+    <main id="main" class="frame">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="frame">
+        <p>© {new Date().getFullYear()} {profile.name}</p>
+        <p>No JavaScript · no cookies · no tracking</p>
+      </div>
+    </footer>
   </body>
 </html>
