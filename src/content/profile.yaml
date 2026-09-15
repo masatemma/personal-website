@@ -11,8 +11,8 @@ location:
 # status: Open to work   # optional; shown before the location in the home page badge
 tagline: Data Engineer in Melbourne, building data platforms on Azure and Databricks.
 summary: >-
-  I work with PySpark, Delta Lake, Unity Catalog, Terraform, SQL and Python,
-  and I like owning a system end to end.
+  I work with PySpark, Delta Lake, Unity Catalog, Terraform, SQL, Python and
+  AWS, and I like owning a system end to end.
 
 # About page, one string per paragraph.
 about:
@@ -31,8 +31,7 @@ links:
   github: https://github.com/masatemma
 
 stack:
-  primary: [Azure, Databricks, PySpark, Delta Lake, Unity Catalog, Terraform, SQL, Python]
-  secondary: [AWS]
+  primary: [Azure, AWS, Databricks, PySpark, Delta Lake, Unity Catalog, Terraform, SQL, Python]
 
 languages:
   - { name: English, code: en, level: Professional }
